@@ -2,6 +2,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -11,13 +13,14 @@ public class TestArrayList {
     private List<Integer> c0;
     private List<Integer> c1;
     private List<String> c2;
+    private int[] c3;
     @Before public void setUp(){
         list =new ArrayList<Integer>();
         list.add(1);
         list.add(2);
         list.add(3);
         list.add(null);
-        c0 = new ArrayList<Integer>();
+        c0 = null;
 //        c0.add(null);
         c1 = new ArrayList<Integer>();
         c1.add(2);
@@ -25,6 +28,10 @@ public class TestArrayList {
         c2 =new ArrayList<String>();
         c2.add("cat");
         c2.add("dog");
+
+        c3=new int[10];
+        c3[0]=1;
+        c3[1]=2;
 
     }
 
@@ -55,20 +62,31 @@ public class TestArrayList {
     //test2 of addAll:C2-T,C3-F
     @Test(expected = NullPointerException.class)
     public void testAddAll_C3(){
+
         list.addAll(0,c0);
     }
-    //test3 of addAll:C2-F,C3-T
-    @Test
-    public void testAddAll_C2(){}
 
+    //test3 of addAll:C2-F,C3-F
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testAddAll_C2(){
+        list.addAll(-1,c1);
+    }
     //test1 of retainAll:C3-T,C4-T
     @Test
-    public void testRetainAll_BaseCase(){}
+    public void testRetainAll_BaseCase(){
+        assertTrue(list.retainAll(c1));
+    }
     //test2 of retainAll:C3-T,C4-F
-    @Test
-    public void testRetainAll_C4(){}
+    @Test(expected = ClassCastException.class)
+    public void testRetainAll_C4(){
+        ArrayList list =(ArrayList) Arrays.asList(c3);//数组转成List
+        list.retainAll(list);
+    }
     //test3 of retainAll:C3-F,C4-T
-    @Test
-    public void testRetainAll_C3(){}
+    @Test(expected = NullPointerException.class)
+    public void testRetainAll_C3(){
+        list.retainAll(c0);
+    }
+
 }
 
