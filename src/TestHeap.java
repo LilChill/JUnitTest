@@ -38,9 +38,6 @@ public class TestHeap {
     public void  initialize(Integer[] list){
         n=list.length;
         heap=list;
-//        for (int i=0;i<n;i++){
-//            heap[i]=list[i];
-//        }
     }
     public int[] transform(Integer[] heap){
         int[] heapList = new int[n];
@@ -54,7 +51,7 @@ public class TestHeap {
     }
     @Before
     public void setUp(){
-        int maxsize = 10;
+        int maxsize = 20;
         heap = new Integer[maxsize];
     }
 
@@ -63,10 +60,9 @@ public class TestHeap {
         Integer[] list={5,8,2,3,6,1,9,0,4};
         initialize(list);
         int[] heapList ;
-        int[] resList = {5,8,2,4,6,1,9,0,3};
+        Integer[] resList = {5,8,2,4,6,1,9,0,3};
         siftdown(3);
-        heapList=transform(heap);
-        assertArrayEquals(resList,heapList);
+        assertArrayEquals(resList,heap);
 
     }
     @Test
@@ -89,30 +85,67 @@ public class TestHeap {
     }
 
     @Test public void testPrimePath_1(){//[1,3,4,5,7,3,4,5,7,3,4,6,5,7,3,4,6,5,7,3,9]
+        Integer[] list = {0,10,9,8,7,6,5,3,4,5,7,1,2,3,4,2,3,1,2};
+        initialize(list);
+        Integer[] resList={10,8,9,4,7,6,5,3,2,5,7,1,2,3,4,2,3,1,0};
+        siftdown(0);
+        assertArrayEquals(resList,heap);
+    }
+    @Test(expected = AssertionError.class)
+    public void testPrimePath_2(){//[1,2,9]
+        Integer[] list={3,2,1};
+
+        initialize(list);
+        siftdown(-1);
+    }
+    @Test public void testPrimePath_3(){//[1,3,9]
+        Integer[] list={3,2,1};
+
+        initialize(list);
+        siftdown(2);
+        assertArrayEquals(list,heap);
+    }
+    @Test public void testPrimePath_4(){//[1,3,4,5,7,3,4,5,8,9]
+        Integer[] list={5,6,4,3,2};
+        initialize(list);
+        Integer[] resList={6,5,4,3,2};
+        siftdown(0);
+        assertArrayEquals(resList,heap);
 
     }
-    @Test public void testPrimePath_2(){//
-
+    @Test public void testPrimePath_5(){//[1,3,4,5,7,3,9]
+        Integer[] list={2,3,1};
+        Integer[] resList={3,2,1};
+        initialize(list);
+        siftdown(0);
+        assertArrayEquals(resList,heap);
     }
-    @Test public void testPrimePath_3(){//
-
+    @Test public void testPrimePath_6(){//[1,3,4,6,5,7,3,9]
+        Integer[] list={2,1,3};
+        Integer[] resList={3,1,2};
+        initialize(list);
+        siftdown(0);
+        assertArrayEquals(resList,heap);
     }
-    @Test public void testPrimePath_4(){//
-
+    @Test public void testPrimePath_7(){//[1,3,4,5,8,9]
+        Integer[] list={3,2,1};
+        initialize(list);
+        Integer[] resList = {3,2,1};
+        siftdown(0);
+        assertArrayEquals(resList,heap);
     }
-    @Test public void testPrimePath_5(){//
-
+    @Test public void testPrimePath_8(){//[1,3,4,6,5,8,9]
+        Integer[] list={3,1,2};
+        initialize(list);
+        Integer[] resList = {3,1,2};
+        siftdown(0);
+        assertArrayEquals(resList,heap);
     }
-    @Test public void testPrimePath_6(){//
-
-    }
-    @Test public void testPrimePath_7(){//
-
-    }
-    @Test public void testPrimePath_8(){//
-
-    }
-    @Test public void testPrimePath_9(){//
-
+    @Test public void testPrimePath_9(){//[1,3,4,5,7,3,4,6,5,8,9]
+        Integer[] list={3,4,2,1,2};
+        initialize(list);
+        Integer[] resList = {4,3,2,1,2};
+        siftdown(0);
+        assertArrayEquals(resList,heap);
     }
 }
